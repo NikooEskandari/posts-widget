@@ -1,0 +1,67 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-md-6 col-md-offset-3">
+      <form [formGroup]="postsForm" (ngSubmit)="onSubmit()">
+        <div class="form-group mt-5">
+          <label for="title">Title</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="title"
+            required
+            id="title"
+            name="title"
+          />
+          <span
+            *ngIf="
+              !postsForm.get('title')?.valid && postsForm.get('title')?.touched
+            "
+            >Title is not valid</span
+          >
+        </div>
+        <div class="form-group mt-2">
+          <label for="content">Content</label>
+          <textarea
+            class="form-control"
+            formControlName="content"
+            id="content"
+            required
+            name="content"
+          ></textarea>
+          <span
+            *ngIf="
+              !postsForm.get('content')?.valid &&
+              postsForm.get('content')?.touched
+            "
+            >Content is not valid</span
+          >
+        </div>
+        <button class="btn btn-primary mt-2" type="submit">Send Post</button>
+      </form>
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="row">
+    <div class="col-xs-12 col-md-6 col-md-offset-3">
+      <button class="btn btn-primary" (click)="onFetch()">Fetch Posts</button>
+      |
+      <button class="btn btn-danger">Clear Posts</button>
+    </div>
+  </div>
+  <div class="row mt-2">
+    <div class="col-xs-12 col-md-6 col-md-offset-3">
+      <p *ngIf="!isFetching && fetchedPosts.length === 0">
+        No posts available!
+      </p>
+
+      <ul class="list-group" *ngIf="!isFetching && fetchedPosts.length > 0">
+        <li class="list-group-item" *ngFor="let post of fetchedPosts">
+          <h3>{{ post.title }}</h3>
+          <p>{{ post.content }}</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
